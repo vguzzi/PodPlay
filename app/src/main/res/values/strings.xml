@@ -42,6 +42,7 @@
   <string name="episode_notification_title">New episodes</string>
   <string name="episode_notification_text">%1$d new episode(s) for %2$s</string>
   <string name="empty_podcast_subscription_list_text">You\'ve not subscribed to any podcasts</string>
+  <string name="search_for_podcasts_button_text">Search</string>
   <string name="pause">Pause</string>
   <string name="play">Play</string>
   <string name="episode_thumbnail">episode thumbnail</string>

@@ -97,7 +97,7 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
 
     searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
       override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
-        databinding.emptyListTextView.visibility = View.GONE
+        databinding.emptyListViewGroup.visibility = View.GONE
         return true
       }
 
@@ -160,7 +160,7 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
       databinding.toolbar.title = getString(R.string.subscribed_podcasts)
       podcastListAdapter.setSearchData(podcasts)
 
-      databinding.emptyListTextView.visibility = if (podcasts.isEmpty()) View.VISIBLE else View.GONE
+      databinding.emptyListViewGroup.visibility = if (podcasts.isEmpty()) View.VISIBLE else View.GONE
     }
   }
 
@@ -230,6 +230,10 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
 
     podcastListAdapter = PodcastListAdapter(null, this, this)
     databinding.podcastRecyclerView.adapter = podcastListAdapter
+
+    databinding.searchForPodcastsButton.setOnClickListener {
+      searchMenuItem.expandActionView()
+    }
   }
 
 
