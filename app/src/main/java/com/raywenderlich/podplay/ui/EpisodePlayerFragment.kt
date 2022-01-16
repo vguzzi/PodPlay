@@ -172,29 +172,22 @@ class EpisodePlayerFragment : Fragment() {
     databinding.replayButton.setOnClickListener {
       seekBy(-10)
     }
-    // 1
     databinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-        // 2
         databinding.currentTimeTextView.text = DateUtils.formatElapsedTime((progress / 1000).toLong())
       }
 
       override fun onStartTrackingTouch(seekBar: SeekBar) {
-        // 3
         draggingScrubber = true
       }
 
       override fun onStopTrackingTouch(seekBar: SeekBar) {
-        // 4
         draggingScrubber = false
-        // 5
         val fragmentActivity = activity as FragmentActivity
         val controller = MediaControllerCompat.getMediaController(fragmentActivity)
         if (controller.playbackState != null) {
-          // 6
           controller.transportControls.seekTo(seekBar.progress.toLong())
         } else {
-          // 7
           seekBar.progress = 0
         }
       }
@@ -241,38 +234,29 @@ class EpisodePlayerFragment : Fragment() {
 
   private fun initMediaPlayer() {
     if (mediaPlayer == null) {
-      // 1
       mediaPlayer = MediaPlayer()
       mediaPlayer?.let { mediaPlayer ->
-        // 2
         mediaPlayer.setAudioAttributes(
             AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                 .build()
         )
-        // 3
         mediaPlayer.setDataSource(podcastViewModel.activeEpisodeViewData?.mediaUrl)
-        // 4
         mediaPlayer.setOnPreparedListener {
-          // 5
           val fragmentActivity = activity as FragmentActivity
           mediaSession?.let { mediaSession ->
             val episodeMediaCallback = PodplayMediaCallback(fragmentActivity, mediaSession, it)
             mediaSession.setCallback(episodeMediaCallback)
           }
-          // 6
           setSurfaceSize()
-          // 7
           if (playOnPrepare) {
             togglePlayPause()
           }
         }
-        // 8
         mediaPlayer.prepareAsync()
       }
     } else {
-      // 9
       setSurfaceSize()
     }
   }
@@ -388,14 +372,11 @@ class EpisodePlayerFragment : Fragment() {
   }
 
   private fun updateControls() {
-    // 1
     databinding.episodeTitleTextView.text = podcastViewModel.activeEpisodeViewData?.title
-    // 2
     val htmlDesc = podcastViewModel.activeEpisodeViewData?.description ?: ""
     val descSpan = HtmlUtils.htmlToSpannable(htmlDesc)
     databinding.episodeDescTextView.text = descSpan
     databinding.episodeDescTextView.movementMethod = ScrollingMovementMethod()
-    // 3
     val fragmentActivity = activity as FragmentActivity
     Glide.with(fragmentActivity)
         .load(podcastViewModel.podcastLiveData.value?.imageUrl)

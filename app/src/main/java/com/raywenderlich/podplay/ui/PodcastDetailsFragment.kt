@@ -83,9 +83,7 @@ class PodcastDetailsFragment : Fragment(), EpisodeListAdapter.EpisodeListAdapter
           Glide.with(activity).load(viewData.imageUrl).into(databinding.feedImageView)
         }
 
-        // 1
         databinding.feedDescTextView.movementMethod = ScrollingMovementMethod()
-        // 2
         databinding.episodeRecyclerView.setHasFixedSize(true)
 
         val layoutManager = LinearLayoutManager(activity)
@@ -94,7 +92,6 @@ class PodcastDetailsFragment : Fragment(), EpisodeListAdapter.EpisodeListAdapter
         val dividerItemDecoration = DividerItemDecoration(
             databinding.episodeRecyclerView.context, layoutManager.orientation)
         databinding.episodeRecyclerView.addItemDecoration(dividerItemDecoration)
-        // 3
         episodeListAdapter = EpisodeListAdapter(viewData.episodes, this)
         databinding.episodeRecyclerView.adapter = episodeListAdapter
         activity?.invalidateOptionsMenu()

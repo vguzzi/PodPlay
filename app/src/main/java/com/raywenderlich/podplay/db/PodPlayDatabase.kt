@@ -53,35 +53,28 @@ class Converters {
   }
 }
 
-// 1
 @Database(entities = [Podcast::class, Episode::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class PodPlayDatabase : RoomDatabase() {
-  // 2
   abstract fun podcastDao(): PodcastDao
 
-  // 3
   companion object {
 
-    // 4
     @Volatile
     private var INSTANCE: PodPlayDatabase? = null
 
-    // 5
     fun getInstance(context: Context, coroutineScope: CoroutineScope): PodPlayDatabase {
       val tempInstance = INSTANCE
       if (tempInstance != null) {
         return tempInstance
       }
 
-      // 6
       synchronized(this) {
         val instance = Room.databaseBuilder(context.applicationContext,
             PodPlayDatabase::class.java,
             "PodPlayer")
             .build()
         INSTANCE = instance
-        // 7
         return instance
       }
     }

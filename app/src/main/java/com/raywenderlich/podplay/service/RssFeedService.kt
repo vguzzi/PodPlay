@@ -101,14 +101,10 @@ class RssFeedService private constructor() {
     if (node.nodeType == Node.ELEMENT_NODE) {
       val nodeName = node.nodeName
       val parentName = node.parentNode.nodeName
-      // 1
       val grandParentName = node.parentNode.parentNode?.nodeName ?: ""
-      // 2
       if (parentName == "item" && grandParentName == "channel") {
-        // 3
         val currentItem = rssFeedResponse.episodes?.last()
         if (currentItem != null) {
-          // 4
           when (nodeName) {
             "title" -> currentItem.title = node.textContent
             "description" -> currentItem.description = node.textContent

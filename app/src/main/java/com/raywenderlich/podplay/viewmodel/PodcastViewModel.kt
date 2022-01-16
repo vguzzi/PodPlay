@@ -88,11 +88,8 @@ class PodcastViewModel(application: Application) : AndroidViewModel(application)
 
   fun getPodcasts(): LiveData<List<PodcastSummaryViewData>>? {
     val repo = podcastRepo ?: return null
-    // 1
     if (livePodcastSummaryData == null) {
-      // 2
       val liveData = repo.getAll()
-      // 3
       livePodcastSummaryData = Transformations.map(liveData) { podcastList ->
         podcastList.map { podcast ->
           podcastToSummaryView(podcast)
@@ -100,7 +97,6 @@ class PodcastViewModel(application: Application) : AndroidViewModel(application)
       }
     }
 
-    // 4
     return livePodcastSummaryData
   }
 
