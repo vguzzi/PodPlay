@@ -81,12 +81,9 @@ class PodcastRepo(private var feedService: RssFeedService,
   private fun rssResponseToPodcast(
       feedUrl: String, imageUrl: String, rssResponse: RssFeedResponse
   ): Podcast? {
-    // 1
     val items = rssResponse.episodes ?: return null
-    // 2
     val description = if (rssResponse.description == "")
       rssResponse.summary else rssResponse.description
-    // 3
     return Podcast(null, feedUrl, rssResponse.title, description, imageUrl,
         rssResponse.lastUpdated, episodes = rssItemsToEpisodes(items))
   }
@@ -112,15 +109,10 @@ class PodcastRepo(private var feedService: RssFeedService,
   }
 
   suspend fun updatePodcastEpisodes() : MutableList<PodcastUpdateInfo> {
-    // 1
     val updatedPodcasts: MutableList<PodcastUpdateInfo> = mutableListOf()
-    // 2
     val podcasts = podcastDao.loadPodcastsStatic()
-    // 3
     for (podcast in podcasts) {
-      // 4
       val newEpisodes = getNewEpisodes(podcast)
-      // 5
       if (newEpisodes.count() > 0) {
         podcast.id?.let {
           saveNewEpisodes(it, newEpisodes)
@@ -128,26 +120,20 @@ class PodcastRepo(private var feedService: RssFeedService,
         }
       }
     }
-    // 6
     return updatedPodcasts
   }
 
   private suspend fun getNewEpisodes(localPodcast: Podcast): List<Episode> {
-    // 1
     val response = feedService.getFeed(localPodcast.feedUrl)
     if (response != null) {
-      // 2
       val remotePodcast = rssResponseToPodcast(localPodcast.feedUrl, localPodcast.imageUrl, response)
       remotePodcast?.let {
-        // 3
         val localEpisodes = podcastDao.loadEpisodes(localPodcast.id!!)
-        // 4
         return remotePodcast.episodes.filter { episode ->
           localEpisodes.find { episode.guid == it.guid } == null
         }
       }
     }
-    // 6
     return listOf()
   }
 

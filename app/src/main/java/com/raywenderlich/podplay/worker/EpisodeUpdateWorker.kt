@@ -53,27 +53,19 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 class EpisodeUpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
-  // 1
   override suspend fun doWork(): Result = coroutineScope {
-    // 2
     val job = async {
-      // 3
       val db = PodPlayDatabase.getInstance(applicationContext, this)
       val repo = PodcastRepo(RssFeedService.instance, db.podcastDao())
-      // 4
       val podcastUpdates = repo.updatePodcastEpisodes()
-        // 5
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           createNotificationChannel()
         }
-        // 6
         for (podcastUpdate in podcastUpdates) {
           displayNotification(podcastUpdate)
         }
     }
-    // 7
     job.await()
-    // 8
     Result.success()
   }
 
