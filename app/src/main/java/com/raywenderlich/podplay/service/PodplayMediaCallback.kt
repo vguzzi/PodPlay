@@ -49,8 +49,8 @@ import android.support.v4.media.session.PlaybackStateCompat
 
 class PodplayMediaCallback(
     val context: Context,
-    val mediaSession: MediaSessionCompat,
-    var mediaPlayer: MediaPlayer? = null
+    private val mediaSession: MediaSessionCompat,
+    private var mediaPlayer: MediaPlayer? = null
 ) : MediaSessionCompat.Callback() {
 
   var listener: PodplayMediaListener? = null
@@ -186,26 +186,24 @@ class PodplayMediaCallback(
 
     var speed = 1.0f
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      speed = newSpeed ?: (mediaPlayer?.playbackParams?.speed ?: 1.0f)
-      mediaPlayer?.let { mediaPlayer ->
-        try {
-          mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(speed)
+    speed = newSpeed ?: (mediaPlayer?.playbackParams?.speed ?: 1.0f)
+    mediaPlayer?.let { mediaPlayer ->
+      try {
+        mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(speed)
+      }
+      catch (e: Exception) {
+
+        mediaPlayer.reset()
+        mediaUri?.let { mediaUri ->
+          mediaPlayer.setDataSource(context, mediaUri)
         }
-        catch (e: Exception) {
+        mediaPlayer.prepare()
 
-          mediaPlayer.reset()
-          mediaUri?.let { mediaUri ->
-            mediaPlayer.setDataSource(context, mediaUri)
-          }
-          mediaPlayer.prepare()
+        mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(speed)
+        mediaPlayer.seekTo(position.toInt())
 
-          mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(speed)
-          mediaPlayer.seekTo(position.toInt())
-
-          if (state == PlaybackStateCompat.STATE_PLAYING) {
-            mediaPlayer.start()
-          }
+        if (state == PlaybackStateCompat.STATE_PLAYING) {
+          mediaPlayer.start()
         }
       }
     }

@@ -41,7 +41,6 @@ import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
@@ -94,11 +93,7 @@ class EpisodePlayerFragment : Fragment() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    isVideo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      podcastViewModel.activeEpisodeViewData?.isVideo ?: false
-    } else {
-      false
-    }
+    isVideo = podcastViewModel.activeEpisodeViewData?.isVideo ?: false
     if (!isVideo) {
       initMediaBrowser()
     }
@@ -159,12 +154,8 @@ class EpisodePlayerFragment : Fragment() {
     databinding.playToggleButton.setOnClickListener {
       togglePlayPause()
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      databinding.speedButton.setOnClickListener {
-        changeSpeed()
-      }
-    } else {
-      databinding.speedButton.visibility = View.INVISIBLE
+    databinding.speedButton.setOnClickListener {
+      changeSpeed()
     }
     databinding.forwardButton.setOnClickListener {
       seekBy(30)

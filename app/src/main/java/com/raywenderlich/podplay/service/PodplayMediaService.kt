@@ -131,7 +131,7 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
     val openActivityIntent = Intent(this, PodcastActivity::class.java)
     openActivityIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
     return PendingIntent.getActivity(
-        this@PodplayMediaService, 0, openActivityIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+        this@PodplayMediaService, 0, openActivityIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT)
   }
 
   @RequiresApi(Build.VERSION_CODES.O)
@@ -188,13 +188,18 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
     val mediaDescription = mediaSession.controller.metadata.description
 
     GlobalScope.launch {
-      val iconUrl = URL(mediaDescription.iconUri.toString())
-      val bitmap = BitmapFactory.decodeStream(iconUrl.openStream())
-      val notification = createNotification(mediaDescription, bitmap)
-      ContextCompat.startForegroundService(
-          this@PodplayMediaService,
-          Intent(this@PodplayMediaService, PodplayMediaService::class.java))
-      startForeground(NOTIFICATION_ID, notification)
+      runCatching {
+        val iconUrl = URL(mediaDescription.iconUri.toString())
+        val bitmap = BitmapFactory.decodeStream(iconUrl.openStream())
+        createNotification(mediaDescription, bitmap)
+      }.onSuccess { notification: Notification ->
+        ContextCompat.startForegroundService(
+                this@PodplayMediaService,
+                Intent(this@PodplayMediaService, PodplayMediaService::class.java))
+        startForeground(NOTIFICATION_ID, notification)
+      }.onFailure { error: Throwable ->
+        println("Notification creation error: ${error.message}")
+      }
     }
   }
 

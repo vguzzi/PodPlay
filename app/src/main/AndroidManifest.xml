@@ -40,7 +40,7 @@
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
   <application
-      android:allowBackup="true"
+      android:allowBackup="false"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
@@ -50,7 +50,8 @@
     >
     <activity android:name=".ui.PodcastActivity"
         android:launchMode="singleTop"
-        android:theme="@style/Theme.PodPlay.NoActionBar">
+        android:theme="@style/Theme.PodPlay.NoActionBar"
+        android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <action android:name="android.intent.action.SEARCH"/>
@@ -68,7 +69,8 @@
     </service>
 
     <receiver
-      android:name="androidx.media.session.MediaButtonReceiver" >
+      android:name="androidx.media.session.MediaButtonReceiver"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MEDIA_BUTTON" />
       </intent-filter>

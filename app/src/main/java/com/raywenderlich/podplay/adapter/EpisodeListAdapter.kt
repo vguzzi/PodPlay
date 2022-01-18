@@ -53,8 +53,8 @@ class EpisodeListAdapter(
   }
 
   inner class ViewHolder(
-      databinding: EpisodeItemBinding,
-      val episodeListAdapterListener: EpisodeListAdapterListener
+          databinding: EpisodeItemBinding,
+          private val episodeListAdapterListener: EpisodeListAdapterListener
   ) : RecyclerView.ViewHolder(databinding.root) {
 
     init {
