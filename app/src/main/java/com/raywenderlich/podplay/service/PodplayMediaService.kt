@@ -56,8 +56,10 @@ import androidx.media.session.MediaButtonReceiver
 import com.raywenderlich.podplay.R
 import com.raywenderlich.podplay.service.PodplayMediaCallback.PodplayMediaListener
 import com.raywenderlich.podplay.ui.PodcastActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.URL
 
 class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
@@ -188,13 +190,18 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
     val mediaDescription = mediaSession.controller.metadata.description
 
     GlobalScope.launch {
-      val iconUrl = URL(mediaDescription.iconUri.toString())
-      val bitmap = BitmapFactory.decodeStream(iconUrl.openStream())
-      val notification = createNotification(mediaDescription, bitmap)
-      ContextCompat.startForegroundService(
-          this@PodplayMediaService,
-          Intent(this@PodplayMediaService, PodplayMediaService::class.java))
-      startForeground(NOTIFICATION_ID, notification)
+      runCatching {
+        val iconUrl = URL(mediaDescription.iconUri.toString())
+        val bitmap = BitmapFactory.decodeStream(iconUrl.openStream())
+        createNotification(mediaDescription, bitmap)
+      }.onSuccess { notification: Notification ->
+        ContextCompat.startForegroundService(
+                this@PodplayMediaService,
+                Intent(this@PodplayMediaService, PodplayMediaService::class.java))
+        startForeground(NOTIFICATION_ID, notification)
+      }.onFailure { error: Throwable ->
+        println("Notification creation error: ${error.message}")
+      }
     }
   }
 
