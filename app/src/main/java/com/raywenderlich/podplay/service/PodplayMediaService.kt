@@ -131,7 +131,7 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
     val openActivityIntent = Intent(this, PodcastActivity::class.java)
     openActivityIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
     return PendingIntent.getActivity(
-        this@PodplayMediaService, 0, openActivityIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+        this@PodplayMediaService, 0, openActivityIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT)
   }
 
   @RequiresApi(Build.VERSION_CODES.O)

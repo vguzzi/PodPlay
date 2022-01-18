@@ -94,11 +94,7 @@ class EpisodePlayerFragment : Fragment() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    isVideo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      podcastViewModel.activeEpisodeViewData?.isVideo ?: false
-    } else {
-      false
-    }
+    isVideo = podcastViewModel.activeEpisodeViewData?.isVideo ?: false
     if (!isVideo) {
       initMediaBrowser()
     }
@@ -159,12 +155,8 @@ class EpisodePlayerFragment : Fragment() {
     databinding.playToggleButton.setOnClickListener {
       togglePlayPause()
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      databinding.speedButton.setOnClickListener {
-        changeSpeed()
-      }
-    } else {
-      databinding.speedButton.visibility = View.INVISIBLE
+    databinding.speedButton.setOnClickListener {
+      changeSpeed()
     }
     databinding.forwardButton.setOnClickListener {
       seekBy(30)

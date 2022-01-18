@@ -83,12 +83,12 @@ class EpisodeUpdateWorker(context: Context, params: WorkerParameters) : Coroutin
 
     val contentIntent = Intent(applicationContext, PodcastActivity::class.java)
     contentIntent.putExtra(EXTRA_FEED_URL, podcastInfo.feedUrl)
-    val pendingContentIntent = PendingIntent.getActivity(applicationContext, 0, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+    val pendingContentIntent = PendingIntent.getActivity(applicationContext, 0, contentIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
     val notification = NotificationCompat.Builder(applicationContext, EPISODE_CHANNEL_ID)
         .setSmallIcon(R.drawable.ic_episode_icon)
         .setContentTitle(applicationContext.getString(R.string.episode_notification_title))
-        .setContentText(applicationContext.getString(R.string.episode_notification_text, podcastInfo.newCount, podcastInfo.name))
+        .setContentText(applicationContext.resources.getQuantityString(R.plurals.episode_notification_text, podcastInfo.newCount, podcastInfo.name))
         .setNumber(podcastInfo.newCount)
         .setAutoCancel(true)
         .setContentIntent(pendingContentIntent)

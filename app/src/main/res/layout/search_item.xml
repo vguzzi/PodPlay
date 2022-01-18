@@ -53,6 +53,7 @@
     android:layout_marginStart="5dp"
     android:adjustViewBounds="true"
     android:scaleType="fitStart"
+    android:contentDescription="@string/podcast_image_description"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
