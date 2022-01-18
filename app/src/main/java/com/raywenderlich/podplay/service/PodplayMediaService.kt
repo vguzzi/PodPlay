@@ -56,10 +56,8 @@ import androidx.media.session.MediaButtonReceiver
 import com.raywenderlich.podplay.R
 import com.raywenderlich.podplay.service.PodplayMediaCallback.PodplayMediaListener
 import com.raywenderlich.podplay.ui.PodcastActivity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.net.URL
 
 class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {

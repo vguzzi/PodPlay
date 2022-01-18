@@ -48,9 +48,9 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 
 class PodplayMediaCallback(
-        val context: Context,
-        private val mediaSession: MediaSessionCompat,
-        private var mediaPlayer: MediaPlayer? = null
+    val context: Context,
+    private val mediaSession: MediaSessionCompat,
+    private var mediaPlayer: MediaPlayer? = null
 ) : MediaSessionCompat.Callback() {
 
   var listener: PodplayMediaListener? = null
