@@ -43,9 +43,9 @@ object DateUtils {
     if (jsonDate == null) {
       return "-"
     }
-    
-    val inFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()) 
-    val date = inFormat.parse(jsonDate) ?: return "-"    
+
+    val inFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val date = inFormat.parse(jsonDate) ?: return "-"
     val outputFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault())
     return outputFormat.format(date)
   }

@@ -162,7 +162,7 @@ class PodplayMediaCallback(
   private fun initializeMediaPlayer() {
     if (mediaPlayer == null) {
       mediaPlayer = MediaPlayer()
-      mediaPlayer!!.setOnCompletionListener{
+      mediaPlayer!!.setOnCompletionListener {
         setState(PlaybackStateCompat.STATE_PAUSED)
       }
       mediaNeedsPrepare = true
@@ -190,8 +190,7 @@ class PodplayMediaCallback(
     mediaPlayer?.let { mediaPlayer ->
       try {
         mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(speed)
-      }
-      catch (e: Exception) {
+      } catch (e: Exception) {
 
         mediaPlayer.reset()
         mediaUri?.let { mediaUri ->

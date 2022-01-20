@@ -50,7 +50,7 @@ import java.util.*
     ],
     indices = [Index("podcastId")]
 )
-data class Episode (
+data class Episode(
     @PrimaryKey var guid: String = "",
     var podcastId: Long? = null,
     var title: String = "",

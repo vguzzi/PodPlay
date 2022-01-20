@@ -138,6 +138,7 @@ class RssFeedService private constructor() {
       domToRssFeedResponse(childNode, rssFeedResponse)
     }
   }
+
   companion object {
     val instance: RssFeedService by lazy {
       RssFeedService()

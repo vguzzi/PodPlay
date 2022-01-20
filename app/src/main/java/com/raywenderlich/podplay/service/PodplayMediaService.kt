@@ -94,6 +94,7 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
       result.sendResult(null)
     }
   }
+
   override fun onGetRoot(clientPackageName: String,
                          clientUid: Int, rootHints: Bundle?): BrowserRoot {
     return BrowserRoot(
@@ -109,7 +110,7 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
   }
 
   private fun getPausePlayActions():
-      Pair<NotificationCompat.Action, NotificationCompat.Action>  {
+      Pair<NotificationCompat.Action, NotificationCompat.Action> {
     val pauseAction = NotificationCompat.Action(
         R.drawable.ic_pause_white, getString(R.string.pause),
         MediaButtonReceiver.buildMediaButtonPendingIntent(this,
@@ -165,7 +166,7 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
         .setSmallIcon(R.drawable.ic_episode_icon)
         .addAction(if (isPlaying()) pauseAction else playAction)
         .setStyle(
-                androidx.media.app.NotificationCompat.MediaStyle()
+            androidx.media.app.NotificationCompat.MediaStyle()
                 .setMediaSession(mediaSession.sessionToken)
                 .setShowActionsInCompactView(0)
                 .setShowCancelButton(true)
@@ -194,8 +195,8 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
         createNotification(mediaDescription, bitmap)
       }.onSuccess { notification: Notification ->
         ContextCompat.startForegroundService(
-                this@PodplayMediaService,
-                Intent(this@PodplayMediaService, PodplayMediaService::class.java))
+            this@PodplayMediaService,
+            Intent(this@PodplayMediaService, PodplayMediaService::class.java))
         startForeground(NOTIFICATION_ID, notification)
       }.onFailure { error: Throwable ->
         println("Notification creation error: ${error.message}")
