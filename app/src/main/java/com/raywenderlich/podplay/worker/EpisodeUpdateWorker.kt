@@ -58,12 +58,12 @@ class EpisodeUpdateWorker(context: Context, params: WorkerParameters) : Coroutin
       val db = PodPlayDatabase.getInstance(applicationContext, this)
       val repo = PodcastRepo(RssFeedService.instance, db.podcastDao())
       val podcastUpdates = repo.updatePodcastEpisodes()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-          createNotificationChannel()
-        }
-        for (podcastUpdate in podcastUpdates) {
-          displayNotification(podcastUpdate)
-        }
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        createNotificationChannel()
+      }
+      for (podcastUpdate in podcastUpdates) {
+        displayNotification(podcastUpdate)
+      }
     }
     job.await()
     Result.success()

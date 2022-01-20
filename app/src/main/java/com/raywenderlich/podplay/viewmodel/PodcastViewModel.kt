@@ -73,14 +73,14 @@ class PodcastViewModel(application: Application) : AndroidViewModel(application)
 
   suspend fun getPodcast(podcastSummaryViewData: PodcastSummaryViewData) {
     podcastSummaryViewData.feedUrl?.let { url ->
-        podcastRepo?.getPodcast(url)?.let {
-          it.feedTitle = podcastSummaryViewData.name ?: ""
-          it.imageUrl = podcastSummaryViewData.imageUrl ?: ""
-          _podcastLiveData.value = podcastToPodcastView(it)
-          activePodcast = it
-        } ?: run {
-          _podcastLiveData.value = null
-        }
+      podcastRepo?.getPodcast(url)?.let {
+        it.feedTitle = podcastSummaryViewData.name ?: ""
+        it.imageUrl = podcastSummaryViewData.imageUrl ?: ""
+        _podcastLiveData.value = podcastToPodcastView(it)
+        activePodcast = it
+      } ?: run {
+        _podcastLiveData.value = null
+      }
     } ?: run {
       _podcastLiveData.value = null
     }

@@ -108,7 +108,7 @@ class PodcastRepo(private var feedService: RssFeedService,
     return podcastDao.loadPodcasts()
   }
 
-  suspend fun updatePodcastEpisodes() : MutableList<PodcastUpdateInfo> {
+  suspend fun updatePodcastEpisodes(): MutableList<PodcastUpdateInfo> {
     val updatedPodcasts: MutableList<PodcastUpdateInfo> = mutableListOf()
     val podcasts = podcastDao.loadPodcastsStatic()
     for (podcast in podcasts) {

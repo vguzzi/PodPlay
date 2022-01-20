@@ -41,8 +41,7 @@ import android.text.Spanned
 object HtmlUtils {
   fun htmlToSpannable(htmlDesc: String): Spanned {
     var newHtmlDesc = htmlDesc.replace("\n".toRegex(), "")
-    newHtmlDesc = newHtmlDesc.replace("(<(/)img>)|(<img.+?>)".
-    toRegex(), "")
+    newHtmlDesc = newHtmlDesc.replace("(<(/)img>)|(<img.+?>)".toRegex(), "")
 
     val descSpan: Spanned
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
