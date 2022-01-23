@@ -433,16 +433,6 @@ class EpisodePlayerFragment : Fragment() {
       registerMediaController(mediaBrowser.sessionToken)
       updateControlsFromController()
     }
-
-    override fun onConnectionSuspended() {
-      super.onConnectionSuspended()
-      println("onConnectionSuspended")
-    }
-
-    override fun onConnectionFailed() {
-      super.onConnectionFailed()
-      println("onConnectionFailed")
-    }
   }
 
   inner class MediaControllerCallback : MediaControllerCompat.Callback() {

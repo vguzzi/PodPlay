@@ -73,28 +73,21 @@ class RssFeedService private constructor() {
         .build()
     service = retrofit.create(FeedService::class.java)
 
-    try {
-      val result = service.getFeed(xmlFileURL)
-      if (result.code() >= 400) {
-        println("server error, ${result.code()}, ${result.errorBody()}")
-        return null
-      } else {
-        var rssFeedResponse: RssFeedResponse?
-        val dbFactory = DocumentBuilderFactory.newInstance()
-        val dBuilder = dbFactory.newDocumentBuilder()
-        withContext(Dispatchers.IO) {
-          val doc = dBuilder.parse(result.body()?.byteStream())
-          val rss = RssFeedResponse(episodes = mutableListOf())
-          domToRssFeedResponse(doc, rss)
-          println(rss)
-          rssFeedResponse = rss
-        }
-        return rssFeedResponse
+    val result = service.getFeed(xmlFileURL)
+    return if (result.code() >= 400) {
+      null
+    } else {
+      var rssFeedResponse: RssFeedResponse?
+      val dbFactory = DocumentBuilderFactory.newInstance()
+      val dBuilder = dbFactory.newDocumentBuilder()
+      withContext(Dispatchers.IO) {
+        val doc = dBuilder.parse(result.body()?.byteStream())
+        val rss = RssFeedResponse(episodes = mutableListOf())
+        domToRssFeedResponse(doc, rss)
+        rssFeedResponse = rss
       }
-    } catch (t: Throwable) {
-      println("error, ${t.localizedMessage}")
+      rssFeedResponse
     }
-    return null
   }
 
   private fun domToRssFeedResponse(node: Node, rssFeedResponse: RssFeedResponse) {

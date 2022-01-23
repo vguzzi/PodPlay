@@ -88,8 +88,6 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
   }
 
   override fun onLoadChildren(parentId: String, result: Result<MutableList<MediaBrowserCompat.MediaItem>>) {
-    // To be implemented
-    println("onLoadChildren called")
     if (parentId == PODPLAY_EMPTY_ROOT_MEDIA_ID) {
       result.sendResult(null)
     }
@@ -198,8 +196,6 @@ class PodplayMediaService : MediaBrowserServiceCompat(), PodplayMediaListener {
             this@PodplayMediaService,
             Intent(this@PodplayMediaService, PodplayMediaService::class.java))
         startForeground(NOTIFICATION_ID, notification)
-      }.onFailure { error: Throwable ->
-        println("Notification creation error: ${error.message}")
       }
     }
   }
