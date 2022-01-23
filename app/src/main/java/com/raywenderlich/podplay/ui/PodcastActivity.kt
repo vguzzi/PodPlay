@@ -240,8 +240,10 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
   private fun showDetailsFragment() {
     val podcastDetailsFragment = createPodcastDetailsFragment()
 
-    supportFragmentManager.beginTransaction().add(R.id.podcastDetailsContainer,
-        podcastDetailsFragment, TAG_DETAILS_FRAGMENT).addToBackStack("DetailsFragment").commit()
+    if (!podcastDetailsFragment.isAdded) {
+      supportFragmentManager.beginTransaction().add(R.id.podcastDetailsContainer,
+          podcastDetailsFragment, TAG_DETAILS_FRAGMENT).addToBackStack("DetailsFragment").commit()
+    }
     databinding.podcastRecyclerView.visibility = View.INVISIBLE
     searchMenuItem.isVisible = false
   }
