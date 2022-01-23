@@ -42,10 +42,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.raywenderlich.podplay.R
 import com.raywenderlich.podplay.adapter.EpisodeListAdapter
 import com.raywenderlich.podplay.databinding.FragmentPodcastDetailsBinding
+import com.raywenderlich.podplay.util.GlideApp
 import com.raywenderlich.podplay.viewmodel.PodcastViewModel
 
 class PodcastDetailsFragment : Fragment(), EpisodeListAdapter.EpisodeListAdapterListener {
@@ -80,7 +80,7 @@ class PodcastDetailsFragment : Fragment(), EpisodeListAdapter.EpisodeListAdapter
         databinding.feedTitleTextView.text = viewData.feedTitle
         databinding.feedDescTextView.text = viewData.feedDesc
         activity?.let { activity ->
-          Glide.with(activity).load(viewData.imageUrl).into(databinding.feedImageView)
+          GlideApp.with(activity).load(viewData.imageUrl).into(databinding.feedImageView)
         }
 
         databinding.feedDescTextView.movementMethod = ScrollingMovementMethod()
