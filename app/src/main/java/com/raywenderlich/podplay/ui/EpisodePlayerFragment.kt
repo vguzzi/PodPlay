@@ -65,6 +65,7 @@ import com.raywenderlich.podplay.service.PodplayMediaCallback
 import com.raywenderlich.podplay.service.PodplayMediaCallback.Companion.CMD_CHANGESPEED
 import com.raywenderlich.podplay.service.PodplayMediaCallback.Companion.CMD_EXTRA_SPEED
 import com.raywenderlich.podplay.service.PodplayMediaService
+import com.raywenderlich.podplay.util.CPUStress
 import com.raywenderlich.podplay.util.HtmlUtils
 import com.raywenderlich.podplay.viewmodel.PodcastViewModel
 
@@ -391,7 +392,7 @@ class EpisodePlayerFragment : Fragment() {
     bundle.putString(MediaMetadataCompat.METADATA_KEY_TITLE, episodeViewData.title)
     bundle.putString(MediaMetadataCompat.METADATA_KEY_ARTIST, viewData.value?.feedTitle)
     bundle.putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, viewData.value?.imageUrl)
-
+    
     controller.transportControls.playFromUri(Uri.parse(episodeViewData.mediaUrl), bundle)
   }
 
