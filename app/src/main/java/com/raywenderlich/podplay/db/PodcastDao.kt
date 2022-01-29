@@ -51,6 +51,7 @@ interface PodcastDao {
   @Query("SELECT * FROM Podcast ORDER BY FeedTitle")
   suspend fun loadPodcastsStatic(): List<Podcast>
 
+  // TODO: Chapter 7 - Fix erroneous database query while loading episodes
   @Query("SELECT * FROM Episode WHERE podcastId = :podcastId ORDER BY releaseDate DESC")
   suspend fun loadEpisodes(podcastId: Long): List<Episode>
 
