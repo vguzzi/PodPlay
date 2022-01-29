@@ -270,6 +270,7 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
   private fun createPodcastDetailsFragment(): PodcastDetailsFragment {
     var podcastDetailsFragment = supportFragmentManager.findFragmentByTag(TAG_DETAILS_FRAGMENT) as PodcastDetailsFragment?
 
+    // TODO: Chapter 10 - Disable null check for introducing memory leaks to resolve later
     if (podcastDetailsFragment == null) {
       podcastDetailsFragment = PodcastDetailsFragment.newInstance()
     }

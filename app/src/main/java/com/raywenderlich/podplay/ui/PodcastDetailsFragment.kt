@@ -75,11 +75,12 @@ class PodcastDetailsFragment : Fragment(), EpisodeListAdapter.EpisodeListAdapter
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    podcastViewModel.podcastLiveData.observe(viewLifecycleOwner, { viewData ->
+    podcastViewModel.podcastLiveData.observe(viewLifecycleOwner) { viewData ->
       if (viewData != null) {
         databinding.feedTitleTextView.text = viewData.feedTitle
         databinding.feedDescTextView.text = viewData.feedDesc
         activity?.let { activity ->
+          // TODO: Chapter 10 - Load unscaled / large bitmap to the ImageView
           GlideApp.with(activity).load(viewData.imageUrl).into(databinding.feedImageView)
         }
 
@@ -96,7 +97,7 @@ class PodcastDetailsFragment : Fragment(), EpisodeListAdapter.EpisodeListAdapter
         databinding.episodeRecyclerView.adapter = episodeListAdapter
         activity?.invalidateOptionsMenu()
       }
-    })
+    }
   }
 
   override fun onAttach(context: Context) {
