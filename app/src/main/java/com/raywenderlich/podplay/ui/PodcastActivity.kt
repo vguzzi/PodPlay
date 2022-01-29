@@ -123,6 +123,7 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
 
   override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
+    // TODO 1
     setIntent(intent)
     handleIntent(intent)
   }
@@ -131,6 +132,7 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
   override fun onShowDetails(podcastSummaryViewData: SearchViewModel.PodcastSummaryViewData) {
     podcastSummaryViewData.feedUrl ?: return
     showProgressBar()
+    // TODO 2
     podcastViewModel.viewModelScope.launch(context = Dispatchers.Main) {
       podcastViewModel.getPodcast(podcastSummaryViewData)
       hideProgressBar()
