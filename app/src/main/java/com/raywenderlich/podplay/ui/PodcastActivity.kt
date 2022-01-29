@@ -144,6 +144,7 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
       setRequiresCharging(true)
     }.build()
 
+    // TODO: Chapter 8 - Initially set interval to 5 min to be debugged and fixed with WorkManager
     val request = PeriodicWorkRequestBuilder<EpisodeUpdateWorker>(
         1, TimeUnit.HOURS)
         .setConstraints(constraints)
