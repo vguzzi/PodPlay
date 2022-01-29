@@ -46,11 +46,17 @@ import android.os.ResultReceiver
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+
+private const val TAG = "PodplayMediaCallback"
 
 class PodplayMediaCallback(
     val context: Context,
     private val mediaSession: MediaSessionCompat,
-    private var mediaPlayer: MediaPlayer? = null
+    private var mediaPlayer: MediaPlayer? = null,
 ) : MediaSessionCompat.Callback() {
 
   var listener: PodplayMediaListener? = null
@@ -84,17 +90,21 @@ class PodplayMediaCallback(
 
   override fun onPlay() {
     super.onPlay()
-
+    Log.v(TAG, "onPlay() called.")
     if (ensureAudioFocus()) {
       mediaSession.isActive = true
       initializeMediaPlayer()
-      prepareMedia()
-      startPlaying()
+      CoroutineScope(Dispatchers.IO).async {
+        prepareMedia()
+      }.invokeOnCompletion{
+        startPlaying()
+      }
     }
   }
 
   override fun onStop() {
     super.onStop()
+    Log.v(TAG, "onStop() called.")
     stopPlaying()
   }
 
@@ -160,6 +170,7 @@ class PodplayMediaCallback(
   }
 
   private fun initializeMediaPlayer() {
+    Log.v(TAG, "initializeMediaPlayer() called.")
     if (mediaPlayer == null) {
       mediaPlayer = MediaPlayer()
       mediaPlayer!!.setOnCompletionListener {
@@ -225,6 +236,7 @@ class PodplayMediaCallback(
   }
 
   private fun prepareMedia() {
+    Log.v(TAG, "prepareMedia() called.")
     if (newMedia) {
       newMedia = false
       mediaPlayer?.let { mediaPlayer ->
@@ -253,6 +265,7 @@ class PodplayMediaCallback(
   }
 
   private fun startPlaying() {
+    Log.v(TAG, "startPlaying() called.")
     mediaPlayer?.let { mediaPlayer ->
       if (!mediaPlayer.isPlaying) {
         mediaPlayer.start()
