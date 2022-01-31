@@ -34,7 +34,6 @@
 
 package com.raywenderlich.podplay.service
 
-import com.raywenderlich.podplay.BuildConfig
 import com.raywenderlich.podplay.util.DateUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -63,9 +62,12 @@ class RssFeedService private constructor() {
         .writeTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
 
+    // TODO: Chapter 11 - Attaching network interceptor
+    /*
     if (BuildConfig.DEBUG) {
       client.addInterceptor(interceptor)
     }
+    */
     client.build()
 
     val retrofit = Retrofit.Builder()
