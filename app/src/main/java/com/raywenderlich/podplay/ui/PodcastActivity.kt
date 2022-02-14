@@ -146,6 +146,7 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
       setRequiresCharging(true)
     }.build()
 
+    // TODO: Chapter 8 - Initially set interval to 5 min to be debugged and fixed with WorkManager
     val request = PeriodicWorkRequestBuilder<EpisodeUpdateWorker>(
         1, TimeUnit.HOURS)
         .setConstraints(constraints)
@@ -179,10 +180,11 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
   }
 
   private fun handleIntent(intent: Intent) {
-    if (Intent.ACTION_SEARCH == intent.action) {
-      val query = intent.getStringExtra(SearchManager.QUERY) ?: return
-      performSearch(query)
-    }
+    val query = intent.getStringExtra(SearchManager.QUERY) ?: ""
+    performSearch(query)
+
+    // TODO: Chapter 11 - Add checks to prevent unnecessary network calls
+
     val podcastFeedUrl = intent.getStringExtra(EpisodeUpdateWorker.EXTRA_FEED_URL)
     if (podcastFeedUrl != null) {
       podcastViewModel.viewModelScope.launch {
@@ -271,6 +273,7 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
   private fun createPodcastDetailsFragment(): PodcastDetailsFragment {
     var podcastDetailsFragment = supportFragmentManager.findFragmentByTag(TAG_DETAILS_FRAGMENT) as PodcastDetailsFragment?
 
+    // TODO: Chapter 10 - Disable null check for introducing memory leaks to resolve later
     if (podcastDetailsFragment == null) {
       podcastDetailsFragment = PodcastDetailsFragment.newInstance()
     }

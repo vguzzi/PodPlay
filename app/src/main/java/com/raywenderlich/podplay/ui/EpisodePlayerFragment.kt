@@ -109,10 +109,11 @@ class EpisodePlayerFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setupControls()
-    if (isVideo) {
-      initMediaSession()
-      initVideoPlayer()
-    }
+
+    // TODO: Chapter 12 - Initialize MediaSession only if it's a video to optimize resource consumption
+
+    initMediaSession()
+    initVideoPlayer()
     updateControls()
   }
 
@@ -133,6 +134,11 @@ class EpisodePlayerFragment : Fragment() {
 
   override fun onStop() {
     super.onStop()
+
+    // TODO: Chapter 12 - Purge MediaPlayer on stop to optimize resource consumption
+  }
+
+  private fun purgeMediaPlayer() {
     progressAnimator?.cancel()
     val fragmentActivity = activity as FragmentActivity
     if (MediaControllerCompat.getMediaController(fragmentActivity) != null) {
