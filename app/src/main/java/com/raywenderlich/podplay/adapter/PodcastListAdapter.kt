@@ -85,12 +85,12 @@ class PodcastListAdapter(
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val searchViewList = podcastSummaryViewList ?: return
-    val searchView = searchViewList[position]
-    holder.podcastSummaryViewData = searchView
-    holder.nameTextView.text = searchView.name
-    holder.lastUpdatedTextView.text = searchView.lastUpdated
-    Glide.with(parentActivity).load(searchView.imageUrl).into(holder.podcastImageView)
+    val summaryList = podcastSummaryViewList ?: return
+    val summaryItem = summaryList[position]
+    holder.podcastSummaryViewData = summaryItem
+    holder.nameTextView.text = summaryItem.name
+    holder.lastUpdatedTextView.text = summaryItem.lastUpdated
+    Glide.with(parentActivity).load(summaryItem.imageUrl).into(holder.podcastImageView)
   }
 
   override fun getItemCount(): Int {
