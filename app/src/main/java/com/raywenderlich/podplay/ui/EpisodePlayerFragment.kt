@@ -111,10 +111,9 @@ class EpisodePlayerFragment : Fragment() {
     setupControls()
 
     // TODO: Chapter 12 - Initialize MediaSession only if it's a video to optimize resource consumption
-    // if (isVideo) {
-      initMediaSession()
-      initVideoPlayer()
-    // }
+
+    initMediaSession()
+    initVideoPlayer()
     updateControls()
   }
 
@@ -137,7 +136,6 @@ class EpisodePlayerFragment : Fragment() {
     super.onStop()
 
     // TODO: Chapter 12 - Purge MediaPlayer on stop to optimize resource consumption
-    // purgeMediaPlayer()
   }
 
   private fun purgeMediaPlayer() {

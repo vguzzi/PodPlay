@@ -63,11 +63,7 @@ class RssFeedService private constructor() {
         .readTimeout(30, TimeUnit.SECONDS)
 
     // TODO: Chapter 11 - Attaching network interceptor
-    /*
-    if (BuildConfig.DEBUG) {
-      client.addInterceptor(interceptor)
-    }
-    */
+
     client.build()
 
     val retrofit = Retrofit.Builder()

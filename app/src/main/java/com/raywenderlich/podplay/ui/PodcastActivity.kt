@@ -182,12 +182,6 @@ class PodcastActivity : AppCompatActivity(), PodcastListAdapterListener,
     performSearch(query)
 
     // TODO: Chapter 11 - Add checks to prevent unnecessary network calls
-    /*
-    if (Intent.ACTION_SEARCH == intent.action) {
-      val query = intent.getStringExtra(SearchManager.QUERY) ?: return
-      performSearch(query)
-    }
-    */
 
     val podcastFeedUrl = intent.getStringExtra(EpisodeUpdateWorker.EXTRA_FEED_URL)
     if (podcastFeedUrl != null) {
