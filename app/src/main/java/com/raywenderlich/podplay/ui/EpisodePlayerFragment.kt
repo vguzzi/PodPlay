@@ -382,6 +382,7 @@ class EpisodePlayerFragment : Fragment() {
   }
 
   private fun startPlaying(episodeViewData: PodcastViewModel.EpisodeViewData) {
+    // TODO 1
     val fragmentActivity = activity as FragmentActivity
     val controller = MediaControllerCompat.getMediaController(fragmentActivity)
 
@@ -392,7 +393,7 @@ class EpisodePlayerFragment : Fragment() {
     bundle.putString(MediaMetadataCompat.METADATA_KEY_ARTIST, viewData.value?.feedTitle)
     bundle.putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, viewData.value?.imageUrl)
 
-    // TODO 1
+    // TODO 2
     controller.transportControls.playFromUri(Uri.parse(episodeViewData.mediaUrl), bundle)
   }
 
@@ -445,6 +446,7 @@ class EpisodePlayerFragment : Fragment() {
 
     override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
       val currentState = state ?: return
+      // TODO 2
       handleStateChange(currentState.state, currentState.position, currentState.playbackSpeed)
     }
   }

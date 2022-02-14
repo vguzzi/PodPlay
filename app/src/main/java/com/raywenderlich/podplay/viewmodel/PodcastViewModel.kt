@@ -73,7 +73,12 @@ class PodcastViewModel(application: Application) : AndroidViewModel(application)
 
   suspend fun getPodcast(podcastSummaryViewData: PodcastSummaryViewData) {
     podcastSummaryViewData.feedUrl?.let { url ->
-      podcastRepo?.getPodcast(url)?.let {
+      var podcast: Podcast?
+      // TODO 1
+      podcast = podcastRepo?.getPodcast(url)
+
+      podcast?.let {
+        // TODO 2
         it.feedTitle = podcastSummaryViewData.name ?: ""
         it.imageUrl = podcastSummaryViewData.imageUrl ?: ""
         _podcastLiveData.value = podcastToPodcastView(it)
